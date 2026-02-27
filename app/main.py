@@ -10,6 +10,12 @@ graph = build_graph()
 class InputRequest(BaseModel):
     text: str
 
+# Home route
+@app.get("/")  
+def read_root():
+    return {"message": "Welcome to the API!"}
+
+# Input route
 @app.post("/process")
 def process_input(request: InputRequest):
     result = graph.invoke({
