@@ -1,0 +1,18 @@
+# Main application entry point 
+from fastapi import FastAPI
+from pydantic import BaseModel
+from app.graph.builder import build_graph
+
+app = FastAPI()
+
+graph = build_graph()
+
+class InputRequest(BaseModel):
+    text: str
+
+@app.post("/process")
+def process_input(request: InputRequest):
+    result = graph.invoke({
+        "user_input": request.text
+    })
+    return result
